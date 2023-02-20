@@ -1,6 +1,6 @@
 // run `node index.js` in the terminal
 
-console.log(`Hello Node.js v${process.versions.node}!`);
+console.log(`!Hello Node.js v${process.versions.node}!`);
 
 const requester = require('./request_dict');
 requester

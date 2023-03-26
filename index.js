@@ -5,14 +5,18 @@ console.log(`!Hello Node.js v${process.versions.node}!`);
 const requester = require('./request_dict');
 const indexer = require('./indexer');
 const createIndexedDict = indexer.createIndexedDict;
+const { Trie } = require('./trie');
 
 requester
   .requestDict()
   .then((res) => {
+    const trie = new Trie();
     const indexed = createIndexedDict(res);
-
+    for (const key in indexed) {
+      trie.insert(key);
+    }
     // console.log('then res', res);
-    console.log('resolved', indexed);
+    console.log('resolved', trie);
   })
   .catch((err) => {
     console.log('catch err', err);

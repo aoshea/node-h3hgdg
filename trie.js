@@ -1,3 +1,8 @@
+module.exports = {
+  TrieNode,
+  Trie,
+};
+
 function TrieNode(key = '', value = '', children = [], count = 0) {
   this.key = key;
   this.value = value;
@@ -5,7 +10,7 @@ function TrieNode(key = '', value = '', children = [], count = 0) {
   this.count = count;
 }
 
-export function Trie() {
+function Trie() {
   this.root = new TrieNode();
 }
 

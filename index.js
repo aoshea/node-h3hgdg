@@ -38,8 +38,10 @@ requester
     const connectors = findConnectors(indexed);
 
     let data = '';
+    let count = 0;
 
     for (let i = 0; i < connectors.length; ++i) {
+      ++count;
       let answers = [];
       let wordsets = [];
       const connx = connectors[i];

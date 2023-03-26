@@ -61,6 +61,7 @@ function findConnectors(indexed) {
   const truncated = truncateIndexedDict(indexed, MIN_LEN, MAX_LEN);
   // then pop off all max words
   const starters = Object.keys(truncated).filter((x) => x.length === MAX_LEN);
+  // exclude 
   const result = [];
 
   for (const x of starters) {

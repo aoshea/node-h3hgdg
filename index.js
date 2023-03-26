@@ -3,11 +3,16 @@
 console.log(`!Hello Node.js v${process.versions.node}!`);
 
 const requester = require('./request_dict');
+const indexer = require('./indexer');
+const createIndexedDict = indexer.createIndexedDict;
+
 requester
   .requestDict()
   .then((res) => {
+    const indexed = createIndexedDict(res);
+
     // console.log('then res', res);
-    console.log('resolved', res.length);
+    console.log('resolved', indexed);
   })
   .catch((err) => {
     console.log('catch err', err);

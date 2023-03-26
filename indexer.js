@@ -1,4 +1,11 @@
-export function createIndexedDict(dict, splitter = '\n') {
+module.exports = {
+  createIndexedDict,
+  truncateIndexedDict,
+  removeCharAtIndex,
+  getRemovedCharList,
+};
+
+function createIndexedDict(dict, splitter = '\n') {
   const x = {};
   const lines = dict.split(splitter);
   for (const line of lines) {
@@ -13,7 +20,7 @@ export function createIndexedDict(dict, splitter = '\n') {
   return x;
 }
 
-export function truncateIndexedDict(indexed, min: number, max: number) {
+function truncateIndexedDict(indexed, min, max) {
   const x = {};
   for (const entry of Object.entries(indexed)) {
     const [key, value] = entry;
@@ -24,11 +31,11 @@ export function truncateIndexedDict(indexed, min: number, max: number) {
   return x;
 }
 
-export function removeCharAtIndex(x: string, index: number) {
+function removeCharAtIndex(x, index) {
   return x.slice(0, index).concat(x.slice(index + 1));
 }
 
-export function getRemovedCharList(x: string) {
+function getRemovedCharList(x) {
   const result = [];
   const len = x.length;
   for (let i = 0; i < len; ++i) {

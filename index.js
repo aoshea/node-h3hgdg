@@ -1,6 +1,8 @@
 // run `node index.js` in the terminal
 
-console.log(`!Hello Node.js v${process.versions.node}!`);
+console.log(`Write answers to csv!`);
+
+const fsPromises = require('fs').promises;
 
 const requester = require('./request_dict');
 const indexer = require('./indexer');
@@ -17,9 +19,32 @@ requester
       trie.insert(key);
     }
     const connectors = findConnectors(indexed);
+
+    let answers = [];
+    let index = 0;
     for (const ok of connectors[0]) {
-      console.log(indexed[ok]);
+      // console.log(index, indexed[ok]);
+      // answers += indexed[ok].join('|');
+      answers.push(indexed[ok]);
+      console.log(index, answers);
+      ++index;
     }
+    answers = Array.prototype.concat.apply([], answers);
+    answers = answers
+      .filter((item, index, list) => list.indexOf(item) === index)
+      .join('|');
+    console.log(answers);
+
+    const data = answers;
+
+    fsPromises
+      .writeFile('games.csv', answers)
+      .then((res) => {
+        console.log('done writing', res);
+      })
+      .catch((err) => {
+        console.error('error writing', err);
+      });
   })
   .catch((err) => {
     console.log('catch err', err);

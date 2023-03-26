@@ -1,10 +1,12 @@
 const { getRemovedCharList, truncateIndexedDict } = require('./indexer');
+const MAX_LEN = 8;
+const MIN_LEN = 3;
 
 module.exports = {
   findConnectors,
 };
 
-function indexer(str, splitter = ' ', min = 3, max = 7) {
+function indexer(str, splitter = ' ', min = MIN_LEN, max = MAX_LEN) {
   const hashmap = {};
   const lines = str
     .split(splitter)
@@ -21,8 +23,6 @@ function indexer(str, splitter = ' ', min = 3, max = 7) {
   return hashmap;
 }
 
-const MAX_LEN = 7;
-const MIN_LEN = 3;
 const INPUT =
   'prime impure premium prim mire rip umpire pi absolutely empire cheese';
 const SPLITTER = ' ';
@@ -58,9 +58,9 @@ function getRemovedCharList(x) {
 
 function findConnectors(indexed) {
   // so, filter out anything longer than max
-  const truncated = truncateIndexedDict(indexed, 3, 7);
+  const truncated = truncateIndexedDict(indexed, MIN_LEN, MAX_LEN);
   // then pop off all max words
-  const starters = Object.keys(truncated).filter((x) => x.length === 7);
+  const starters = Object.keys(truncated).filter((x) => x.length === MAX_LEN);
   const result = [];
 
   for (const x of starters) {
@@ -73,7 +73,7 @@ function findConnectors(indexed) {
     while (q.length > 0) {
       curr = q.pop();
       if (indexed[curr.value]) {
-        if (curr.value.length > 3) {
+        if (curr.value.length > MIN_LEN) {
           const new_nodes = getRemovedCharList(curr.value).map((x) =>
             toNode(x, curr)
           );

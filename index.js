@@ -17,8 +17,9 @@ requester
       trie.insert(key);
     }
     const connectors = findConnectors(indexed);
-    // console.log('then res', res);
-    console.log('resolved', connectors);
+    for (const ok of connectors[0]) {
+      console.log(indexed[ok]);
+    }
   })
   .catch((err) => {
     console.log('catch err', err);

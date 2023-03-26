@@ -5,6 +5,7 @@ console.log(`!Hello Node.js v${process.versions.node}!`);
 const requester = require('./request_dict');
 const indexer = require('./indexer');
 const createIndexedDict = indexer.createIndexedDict;
+const { findConnectors } = require('./connectors');
 const { Trie } = require('./trie');
 
 requester
@@ -15,8 +16,9 @@ requester
     for (const key in indexed) {
       trie.insert(key);
     }
+    const connectors = findConnectors(indexed);
     // console.log('then res', res);
-    console.log('resolved', trie);
+    console.log('resolved', connectors);
   })
   .catch((err) => {
     console.log('catch err', err);

@@ -1,8 +1,8 @@
-import {
-  getRemovedCharList,
-  removeCharAtIndex,
-  truncateIndexedDict,
-} from './indexer';
+const { getRemovedCharList, truncateIndexedDict } = require('./indexer');
+
+module.exports = {
+  findConnectors,
+};
 
 function indexer(str, splitter = ' ', min = 3, max = 7) {
   const hashmap = {};
@@ -32,14 +32,7 @@ const starters = Object.keys(indexed_dict).filter((x) => x.length === MAX_LEN);
 
 const result = [];
 
-type Node = {
-  parent?: Node;
-  value: string;
-  children: Node[];
-  is_complete: boolean;
-};
-
-function toNode(x: string, parent?: Node) {
+function toNode(x, parent) {
   return {
     parent: parent,
     value: x,
@@ -48,6 +41,7 @@ function toNode(x: string, parent?: Node) {
   };
 }
 
+/*
 function removeCharAtIndex(x, index) {
   return x.slice(0, index).concat(x.slice(index + 1));
 }
@@ -60,8 +54,9 @@ function getRemovedCharList(x) {
   }
   return result.filter((el, index, arr) => arr.indexOf(el) === index);
 }
+*/
 
-export function findConnectors(indexed: Record<string, string[]>): string[] {
+function findConnectors(indexed) {
   // so, filter out anything longer than max
   const truncated = truncateIndexedDict(indexed, 3, 7);
   // then pop off all max words

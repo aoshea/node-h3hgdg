@@ -10,6 +10,23 @@ const createIndexedDict = indexer.createIndexedDict;
 const { findConnectors } = require('./connectors');
 const { Trie } = require('./trie');
 
+function initWordsets(wordsets) {
+  const ordered = wordsets.slice(0, 1);
+  for (let i = 1; i < wordsets.length; ++i) {
+    const x = wordsets[i];
+    let prev = ordered[i - 1];
+    const chars = x.split('');
+    for (let j = 0; j < chars.length; ++j) {
+      const ch = chars[j];
+      if (prev.indexOf(ch) === -1) {
+        prev = prev + ch;
+      }
+    }
+    ordered.push(prev);
+  }
+  return ordered;
+}
+
 requester
   .requestDict()
   .then((res) => {
@@ -21,24 +38,28 @@ requester
     const connectors = findConnectors(indexed);
 
     let answers = [];
+    let wordsets = [];
     let index = 0;
     for (const ok of connectors[0]) {
       // console.log(index, indexed[ok]);
       // answers += indexed[ok].join('|');
       answers.push(indexed[ok]);
-      console.log(index, answers);
+      wordsets.push(ok);
       ++index;
     }
     answers = Array.prototype.concat.apply([], answers);
     answers = answers
       .filter((item, index, list) => list.indexOf(item) === index)
       .join('|');
-    console.log(answers);
+    wordsets = initWordsets(
+      wordsets.filter((item, index, list) => list.indexOf(item) === index)
+    ).join('|');
+    console.log(wordsets);
 
-    const data = answers;
+    const data = wordsets + ',' + answers;
 
     fsPromises
-      .writeFile('games.csv', answers)
+      .writeFile('games.csv', data)
       .then((res) => {
         console.log('done writing', res);
       })

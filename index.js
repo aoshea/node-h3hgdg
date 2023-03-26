@@ -37,26 +37,26 @@ requester
     }
     const connectors = findConnectors(indexed);
 
-    let answers = [];
-    let wordsets = [];
-    let index = 0;
-    for (const ok of connectors[0]) {
-      // console.log(index, indexed[ok]);
-      // answers += indexed[ok].join('|');
-      answers.push(indexed[ok]);
-      wordsets.push(ok);
-      ++index;
-    }
-    answers = Array.prototype.concat.apply([], answers);
-    answers = answers
-      .filter((item, index, list) => list.indexOf(item) === index)
-      .join('|');
-    wordsets = initWordsets(
-      wordsets.filter((item, index, list) => list.indexOf(item) === index)
-    ).join('|');
-    console.log(wordsets);
+    let data = '';
 
-    const data = wordsets + ',' + answers;
+    for (let i = 0; i < connectors.length; ++i) {
+      let answers = [];
+      let wordsets = [];
+      const connx = connectors[i];
+      for (const ok of connx) {
+        answers.push(indexed[ok]);
+        wordsets.push(ok);
+      }
+      answers = Array.prototype.concat.apply([], answers);
+      answers = answers
+        .filter((item, index, list) => list.indexOf(item) === index)
+        .join('|');
+      wordsets = initWordsets(
+        wordsets.filter((item, index, list) => list.indexOf(item) === index)
+      ).join('|');
+
+      data += wordsets + ',' + answers + '\n';
+    }
 
     fsPromises
       .writeFile('games.csv', data)

@@ -11,7 +11,10 @@ function createIndexedDict(dict, splitter = '\n') {
   for (const line of lines) {
     const sanitized = line.replace(/[-\n\r]+/g, '');
 
-    if (sanitized.substr(sanitized.length - 1) === 's') {
+    if (
+      sanitized.length === 8 &&
+      sanitized.substr(sanitized.length - 1) === 's'
+    ) {
       continue;
     }
 

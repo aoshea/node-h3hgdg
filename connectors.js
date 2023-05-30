@@ -41,21 +41,6 @@ function toNode(x, parent) {
   };
 }
 
-/*
-function removeCharAtIndex(x, index) {
-  return x.slice(0, index).concat(x.slice(index + 1));
-}
-
-function getRemovedCharList(x) {
-  const result = [];
-  const len = x.length;
-  for (let i = 0; i < len; ++i) {
-    result.push(removeCharAtIndex(x, i));
-  }
-  return result.filter((el, index, arr) => arr.indexOf(el) === index);
-}
-*/
-
 function findConnectors(indexed) {
   // so, filter out anything longer than max
   const truncated = truncateIndexedDict(indexed, MIN_LEN, MAX_LEN);

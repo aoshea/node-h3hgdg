@@ -24,7 +24,7 @@ function indexer(str, splitter = ' ', min = MIN_LEN, max = MAX_LEN) {
 }
 
 const INPUT =
-  'prime impure premium prim mire rip umpire pi absolutely empire cheese';
+  'prime impure premium prim mire rip umpire pi absolutely empire cheese dim mid dime idem deism dimes missed misused surmised';
 const SPLITTER = ' ';
 
 const indexed_dict = indexer(INPUT, SPLITTER, MIN_LEN, MAX_LEN);

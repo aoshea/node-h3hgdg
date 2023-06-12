@@ -27,11 +27,13 @@ function initWordsets(wordsets) {
   return ordered;
 }
 
+const INPUT =
+  'prime impure premium prim mire rip umpire pi absolutely empire cheese dim mid dime idem deism dimes missed misused surmised';
 requester
   .requestDict()
   .then((res) => {
     const trie = new Trie();
-    const indexed = createIndexedDict(res);
+    const indexed = createIndexedDict(INPUT, ' ');
     for (const key in indexed) {
       trie.insert(key);
     }
@@ -72,4 +74,3 @@ requester
   .catch((err) => {
     console.log('catch err', err);
   });
-

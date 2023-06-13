@@ -1,0 +1,17 @@
+SQL Commands 
+
+Copy games.csv into database with PSQL
+\copy game (wordkeys, answers) from 'games.csv' delimiter ',';
+
+Insert game ids into game_set 
+insert into game_set (game_id)
+select g.game_id
+from game g
+inner join (
+select distinct on (short_ans)
+left(answers, 3) as short_ans, game_id
+from game
+) gd on g.game_id = gd.game_id;
+
+
+

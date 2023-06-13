@@ -1,6 +1,6 @@
 // run `node index.js` in the terminal
-
-console.log(`Write answers to csv!`);
+console.log('Word generator');
+console.log('Fetching dictionary...');
 
 const fsPromises = require('fs').promises;
 
@@ -44,6 +44,9 @@ const INPUT =
 requester
 	.requestDict()
 	.then(res => {
+		console.log('Succesfully fetched dictionary');
+		console.log('Generating csv...');
+
 		const trie = new Trie();
 		const indexed = createIndexedDict(res);
 		for (const key in indexed) {
@@ -74,13 +77,13 @@ requester
 
 		fsPromises
 			.writeFile('games.csv', data)
-			.then(res => {
-				console.log('done writing', res);
+			.then(() => {
+				console.log('CSV file complete.');
 			})
 			.catch(err => {
-				console.error('error writing', err);
+				console.error('Error writing to CSV file', err);
 			});
 	})
 	.catch(err => {
-		console.log('catch err', err);
+		console.error('Error fetcing dictionary', err);
 	});

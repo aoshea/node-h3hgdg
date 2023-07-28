@@ -1,27 +1,18 @@
-const https = require('https');
-
-const DICT_ALT_12_URL =
-  'https://raw.githubusercontent.com/en-wl/wordlist/master/alt12dicts/2of4brif.txt';
+const fs = require('fs');
+const path = require('path');
+const DICT_FILE = '3of6game.txt';
 
 module.exports = {
-  requestDict,
+	requestDict
 };
 
-function requestDict(url = DICT_ALT_12_URL) {
-  return new Promise((resolve, reject) => {
-    const request = https.get(url, (res) => {
-      if (res.statusCode !== 200) {
-        reject('Error status code:' + res.statusCode);
-      }
-      let text = '';
-      res.on('data', (chunk) => {
-        text += chunk.toString();
-      });
-      res.on('end', () => {
-        resolve(text);
-      });
-    });
-    request.on('error', () => reject('Some errr'));
-    request.end();
-  });
+function requestDict() {
+	return new Promise((resolve, reject) => {
+		fs.readFile(path.join(__dirname, DICT_FILE), 'utf8', (err, data) => {
+			if (err) {
+				reject('Error loading file:' + err);
+			}
+			resolve(data);
+		});
+	});
 }

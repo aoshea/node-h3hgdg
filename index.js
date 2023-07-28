@@ -57,22 +57,48 @@ requester
 		let data = '';
 		let count = 0;
 
+		console.log('No of sets found: ' + connectors.length);
+		const randomIndex = Math.floor(Math.random() * connectors.length);
+
+		const endWords = {};
+		for (let i = 0; i < connectors.length; ++i) {
+			const connx = connectors[i];
+			const key = connx[connx.length - 1];
+			endWords[key] = 0;
+		}
+
+		const dataSet = new Map();
+
 		for (let i = 0; i < connectors.length; ++i) {
 			++count;
 			let answers = [];
 			let wordsets = [];
 			const connx = connectors[i];
+			const key = connx[connx.length - 1];
 			for (const ok of connx) {
 				answers.push(indexed[ok]);
 				wordsets.push(ok);
 			}
 			answers = Array.prototype.concat.apply([], answers);
-			answers = answers.filter((item, index, list) => list.indexOf(item) === index).join('|');
+			answers = answers.filter((item, index, list) => list.indexOf(item) === index);
+
 			wordsets = initWordsets(
 				wordsets.filter((item, index, list) => list.indexOf(item) === index)
 			).join('|');
 
-			data += wordsets + ',' + answers + '\n';
+			if (answers.length > endWords[key]) {
+				endWords[key] = answers.length;
+				dataSet.set(key, wordsets + ',' + answers.join('|'));
+			}
+		}
+
+		let kk = 0;
+		for (const value of dataSet.values()) {
+			data += value + '\n';
+			++kk;
+			if (kk === randomIndex) {
+				console.log('Random set: ' + value);
+			}
 		}
 
 		fsPromises

@@ -57,9 +57,6 @@ requester
 		let data = '';
 		let count = 0;
 
-		console.log('No of sets found: ' + connectors.length);
-		const randomIndex = Math.floor(Math.random() * connectors.length);
-
 		const endWords = {};
 		for (let i = 0; i < connectors.length; ++i) {
 			const connx = connectors[i];
@@ -93,6 +90,10 @@ requester
 		}
 
 		let kk = 0;
+
+		console.log('No of sets found: ' + dataSet.size);
+		const randomIndex = Math.floor(Math.random() * dataSet.size);
+
 		for (const value of dataSet.values()) {
 			data += value + '\n';
 			++kk;
@@ -100,6 +101,7 @@ requester
 				console.log('Random set: ' + value);
 			}
 		}
+		console.log(kk, randomIndex);
 
 		fsPromises
 			.writeFile('games.csv', data)
